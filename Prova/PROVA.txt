@@ -1,0 +1,124 @@
+EXTRA
+
+function inteiros(x:number, y:number, z:number):string{
+    if(x>y && x>z) return "x é o maior"
+    if(y>x && y>z) return "y é o maior"
+    if(z>x && z>y) return "z é o maior"
+    return
+}
+
+console.log(inteiros(10,4,7))
+
+
+
+
+QUESTAO 1
+
+function fatorial(x:number):number{
+    let res = 1
+    for(let i=1; i<=x; i++){
+        res = res*i
+    }
+
+    return res
+}
+
+function soma(x:number):number{
+    let res = 0
+    for(let i=1; i<=x; i++){
+        res+= i
+    }
+    return res
+}
+
+
+const inteiros = (vetor:number[])=>{
+    for(let i=0; i<vetor.length; i++){
+
+        if(vetor[i]%2 == 0){
+            console.log("O fatorial do número " + vetor[i] + " é " + fatorial(vetor[i]))
+
+        }else{
+            console.log("O somatorio do número " + vetor[i] + " é " + soma(vetor[i]))
+        }
+    }
+}
+
+console.log(inteiros([8,9,6,4,5]))
+
+
+QUESTAO 2
+
+function numeros(vetor:number[]):[number,number,number]{
+    let maior:number = vetor[0]
+    let menor:number = vetor[0]
+    let media:number = 0
+    for (let i=0; i<vetor.length; i++){
+        if(vetor[i]>maior) maior = vetor[i]
+        if(vetor[i]<menor) menor = vetor[i]
+        media +=vetor[i]/vetor.length
+    }
+
+    return [maior,menor,media]
+
+}
+
+console.log(numeros([3,4,5,23,35]))
+
+
+QUESTAO 3
+
+enum JokenPoV2 {
+    ESCUDO = 1,
+    MARTELO = 2,
+    TRIDENTE = 3
+}
+
+function jogo(jogador1:JokenPoV2, jogador2:JokenPoV2):string{
+    if(jogador1 == jogador2) return "Empate"
+
+    if(jogador1 == JokenPoV2.ESCUDO && jogador2 == JokenPoV2.MARTELO ) return "Jogador 1 ganhou"
+    else if(jogador1 == JokenPoV2.MARTELO && jogador2 == JokenPoV2.TRIDENTE) return "Jogador 1 ganhou"
+    else if (jogador1 == JokenPoV2.TRIDENTE && jogador2 == JokenPoV2.ESCUDO) return "Jogador 1 ganhou"
+    else return "Jogador 2 ganhou"
+}
+
+console.log(jogo(JokenPoV2.MARTELO,JokenPoV2.ESCUDO));
+
+
+QUESTAO 4
+
+const vetor = (alunos:[string,number][]):string[] => {
+    let aprv:string[] = []
+
+    for(let i=0;i<alunos.length;i++){
+        if(alunos[i][1]>6) aprv.push(alunos[i][0])
+    }
+
+    return aprv
+}
+
+let alunos: [string,number][];
+
+alunos = [
+    ["Jefferson",4.5],
+    ["Lazaro",5.2],
+    ["Gabriel",7.0],
+    ["Vivian",10]
+]
+
+console.log(vetor(alunos))
+
+
+QUESTAO 5
+
+const cunhado = (x:number):boolean => {
+    for(let i=2; i<x/2; i++){
+        if(x%5!=0) return false
+        if(x%i==0) return false
+    }
+    return true
+}
+
+console.log(cunhado(5))
+console.log(cunhado(11))
