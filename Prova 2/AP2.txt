@@ -1,0 +1,264 @@
+QUESTAO 1
+
+class Endereço {
+    rua:string
+    cidade:string
+    estado:string
+    cep:string
+    pais:string
+
+    toString(rua:string,cidade:string,estado:string,cep:string,pais:string):string{
+        return rua + (",") + cidade + (",") + estado + (",") + cep + (",") + pais
+    }
+
+}
+
+interface IPessoa{
+    nome:string
+    sobrenome: string
+    endereço:Endereço
+
+    getNomeCompleto(nome:string,sobrenome:string):string
+}
+
+class Estudante implements IPessoa{
+    nome:string
+    sobrenome: string
+    endereço:Endereço
+
+    matricula:string
+    media:number
+
+    getNomeCompleto(nome:string, sobrenome:string):string{
+        return nome + (" ") + sobrenome   
+    }
+
+    getSituação(media:number):boolean{
+        if(media>7 || media == 5) return true
+        return false
+    }
+
+}
+
+class Professor implements IPessoa{
+    nome:string
+    sobrenome: string
+    endereço:Endereço
+
+    salario:number
+
+    getNomeCompleto(nome:string,sobrenome:String):string{
+        return nome + (" ") + sobrenome
+    }
+
+    getSalario(salario:number):number{
+        return salario
+    }
+}
+
+let endereço1:Endereço = new Endereço()
+let es1:Estudante = new Estudante()
+let pr1:Professor = new Professor()
+console.log(es1.getNomeCompleto("Marcos","Sousa"))
+console.log(es1.getSituação(8))
+console.log(endereço1.toString("Centro","Altran Moreno","Ceara", "0000000","Brasil"))
+console.log(pr1.getSalario(3000))
+
+QUESTAO 02
+
+//Polimmorfismo é quando existe uma superclasse e outras classes herdam os metodos dessa superclasse.
+// Ex.: existe uma super classe com os atributos nome, sobrenome, e profissão; e um metodo chamado getNome.
+//Existe outra classe chamada Estudante, essa classe vai herdar os atributos e os metodos da super classe.
+// Com o polimorfismo é possivel reutilizar atributos de outras classes com uma logica diferente, diminuindo assim, o numero de codigo
+
+abstract class Pessoa {
+    nome:string
+    idade:number
+
+    abstract Nome(nome): string
+}
+
+class Estudante extends Pessoa {
+    ira:number
+
+    Nome(nome:string):string {
+        return nome
+    }
+}
+
+interface IFaculdade extends Pessoa{
+    Semestre:string
+
+    getSemestre(Semestre:string):string
+}
+interface  ISofredor extends IFaculdade{
+    Dificuldade_ap1:string
+
+    getAvaliação(Dificuldade_ap1:string):string
+}
+
+class DD implements ISofredor{
+    Dificuldade_ap1:string
+    Semestre:string
+    nome:string
+    idade:number
+
+    Nome(nome:string):string {
+        return nome
+    }
+
+    getSemestre(Semestre:string):string{
+        return Semestre
+    }
+
+    getAvaliação(Dificuldade_ap1:string):string {
+        return "A dificuldade está: " + Dificuldade_ap1
+    }
+    
+}
+
+let curso:DD = new DD()
+console.log(curso.getAvaliação("Extrema"))
+
+QUESTAO 03
+
+class DespesaMes{
+    mes:number
+    valor:number
+    
+    constructor(mes:number, valor:number){
+        this.mes = mes
+        this.valor = valor
+    }
+
+    getMes():number{
+        return this.mes
+    }
+
+    getValor():number{
+        return this.valor
+    }
+}
+
+class DespesaDia extends DespesaMes{
+    dia:number
+
+    constructor(dia:number,mes:number , valor:number){
+        super(mes,valor)
+        this.dia = dia
+    }
+
+    getDia():number{
+        return this.dia
+    }
+}
+
+class DespesaTotal extends DespesaDia{
+    cpf:number
+    despesas:DespesaDia[]
+
+    constructor(cpf:number,despesas:DespesaDia[],dia:number,mes:number, valor:number){
+        super(dia,mes,valor)
+        this.cpf = cpf
+        this.despesas = despesas
+    }
+
+    getCPF(cpf:number){
+        return cpf
+    }
+
+    totalizaMes(mes:number){
+        if(mes === this.mes){
+            return this.getValor
+        }
+    }
+}
+
+//let m:DespesaMes = new DespesaMes(3,25)
+let d:DespesaDia = new DespesaDia(7,3,76)
+let d1:DespesaDia = new DespesaDia(20,5,88)
+let dt:DespesaTotal = new DespesaTotal(9999999,[d,d1],7,5,4)
+console.log(dt.getCPF(99999))
+console.log(dt)
+
+QUESTAO 04
+
+interface IUsuario{
+    id:number
+    nome:string
+    amizades:IUsuario[]
+
+    isAmigo(usuario:IUsuario):boolean
+}
+
+class Amigo implements IUsuario{
+    id:number
+    nome:string
+    amizades:IUsuario[]
+
+    constructor(id:number, nome:string){
+        this.id = id
+        this.nome = nome
+        this.amizades = []
+    }
+
+    isAmigo(usuario:IUsuario):boolean{
+        for(let amigo of this.amizades){
+            if(usuario.id === amigo.id) return true
+        }
+        return false
+    }
+}
+
+let am1:Amigo = new Amigo(333,"Maria")
+let am2:Amigo = new Amigo(222,"Daniel")
+let am3:Amigo = new Amigo(444,'Carlos')
+console.log(am1.isAmigo(am3))
+
+QUESTAO 5
+
+enum Pagamento {
+    DINHEIRO = 'DINHEIRO',
+    CHEQUE = 'CHEQUE',
+    CARTAO = 'CARTAO'
+}
+
+
+class Produto {
+    preço:number
+    quantidadeEstoque:number
+
+    constructor(preço:number, quantidadeEstoque:number){
+        this.preço = preço
+        this.quantidadeEstoque = quantidadeEstoque
+    }
+}
+
+class Pedido {
+    cliente:string
+    pagamento:Pagamento
+    produto:Produto
+    quantidade:number
+
+    constructor(cliente:string, pagamento:Pagamento, produto:Produto, quantidade:number){
+        this.cliente = cliente
+        this.pagamento = pagamento
+        this.produto = produto
+        this.quantidade = quantidade
+    }
+}
+
+class Supermercado extends Produto {
+    encomendas:Pedido
+
+    constructor(preço:number,quantidadeEstoque:number,encomendas:Pedido){
+        super(preço,quantidadeEstoque)
+        this.encomendas = encomendas
+    }
+
+    getEncomendas(){
+        return this.encomendas
+    }
+
+
+}
